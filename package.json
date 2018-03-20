@@ -1,7 +1,7 @@
 {
   "name": "05-nodejs",
   "version": "1.0.0",
-  "description": "",
+  "description": "веб - прилолжение для просмотра содержимого репозитория",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,5 +12,14 @@
     "eslint": "^4.19.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.9.0"
-  }
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2gnc/node-homework.git"
+  },
+  "bugs": {
+    "url": "https://github.com/2gnc/node-homework/issues"
+  },
+  "homepage": "https://github.com/2gnc/node-homework#readme"
 }

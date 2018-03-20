@@ -4,7 +4,8 @@
   "description": "веб - прилолжение для просмотра содержимого репозитория",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +14,9 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.9.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.16.3"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/2gnc/node-homework.git"

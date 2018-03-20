@@ -1,7 +1,7 @@
 const config = {
   app: {
     host: 'localhost',
-    port: 3030,
+    port: 3001,
   },
   repo: {
     path: '/some/path',

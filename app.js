@@ -1,5 +1,4 @@
 const express = require('express');
-const Gitloader = require('./gitloader');
 const index = require('./routes/index');
 
 const app = express();
@@ -8,7 +7,5 @@ const app = express();
 app.set('view engine', 'pug');
 
 app.use('/', index);
-
-const gtl = new Gitloader();
 
 module.exports = app;

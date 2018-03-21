@@ -1,6 +1,8 @@
 const express = require('express');
+const Gitloader = require('../gitloader');
 
 const router = express.Router();
+const gtl = new Gitloader();
 
 router.use((req, res, next) => {
   // специфический обработчик именно для этого маршрута
@@ -10,10 +12,22 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-  res.render('index', {
-    title: 'Проверка2',
-    message: 'Привет, я роутер',
-  });
+  let branches;
+
+  gtl.getBranches()
+    .then((stdout) => {
+      branches = stdout;
+      
+      res.render('index', {
+        title: 'Проверка2',
+        message: 'Ветки:',
+        branches,
+      });
+    })
+    .catch((stderr) => {
+      console.log('что-то пошло не так: ', stderr);
+    });
+
 });
 
 module.exports = router;

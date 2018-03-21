@@ -4,7 +4,7 @@ const config = {
     port: 3001,
   },
   repo: {
-    path: '/some/path',
+    path: '/home/ksenia/learn/shri/05-nodejs/node-homework',
   },
 };
 

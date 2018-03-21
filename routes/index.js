@@ -12,11 +12,10 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-  let branches;
 
   gtl.getBranches()
     .then((stdout) => {
-      branches = stdout;
+      let branches = stdout;
       branches = branches.replace('* ', '*').split(' ').filter(item => item.length > 0);
       
       res.render('index', {

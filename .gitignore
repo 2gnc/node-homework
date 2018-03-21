@@ -1,3 +1,4 @@
 node_modules
 prepare
 .DS_store
+.vscode

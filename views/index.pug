@@ -2,5 +2,9 @@ html
   head
     title!= title
   body
-    h1!= message
-    p!= branches
+    h1.header!= message
+    p
+      ul
+        each val in branches
+          a(href = '/')
+            li= val

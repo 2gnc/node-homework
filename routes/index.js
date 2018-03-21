@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
   gtl.getBranches()
     .then((stdout) => {
       branches = stdout;
+      branches = branches.replace('* ', '*').split(' ').filter(item => item.length > 0);
       
       res.render('index', {
         title: 'Проверка2',

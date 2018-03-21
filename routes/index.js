@@ -3,7 +3,9 @@ const express = require('express');
 const router = express.Router();
 
 router.use((req, res, next) => {
-  console.log('специфический обработчик именно для этого маршрута');
+  // специфический обработчик именно для этого маршрута
+  /* ... */
+  // next(); передает управление дальше
   next();
 });
 

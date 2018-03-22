@@ -3,10 +3,10 @@ html
     title!= title
   body
     h1.header!= message
-      ul.branches
-        each val in branches
-          a(href = '/')
-            if val.isDefault
-              li.branch.branch_default= val.name
-            else
-              li.branch=val.name  
+    ul.branches
+      each val in branches
+        a(href = '/')
+          if val.isDefault
+            li.branch.branch_default= val.name
+          else
+            li.branch=val.name  

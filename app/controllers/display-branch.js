@@ -5,20 +5,21 @@
  */
 
 const displayBranches = (branch) => {
+  const re = /\n/;
   const bra = branch.replace('* ', '*')
+    .replace(re, ' ')
     .split(' ')
     .filter(item => item.length > 0)
     .map((item) => {
-      const name = item.replace('*', '');
-      const isDefault = (item[0] === '*');
+      let itm = item.replace(re, '');
+      const name = itm.replace('*', '');
+      const isDefault = itm.indexOf('*') !== -1;
       const link = `#branch-${name}`;
-      return (
-        {
-          name,
-          isDefault,
-          link,
-        }
-      );
+      return ({
+        name,
+        isDefault,
+        link,
+      });
     });
 
   return bra;

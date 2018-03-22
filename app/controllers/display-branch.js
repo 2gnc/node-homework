@@ -5,11 +5,19 @@
  */
 
 const displayBranches = (branch) => {
-  const brnch = branch.replace('* ', '*')
+  const bra = branch.replace('* ', '*')
     .split(' ')
-    .filter(item => item.length > 0);
-
-  return brnch;
+    .filter(item => item.length > 0)
+    .map((item) => {
+      const isDefault = (item[0] === '*');
+      return (
+        {
+          name: item.replace('*', ''),
+          isDefault,
+        }
+      );
+    });
+  return bra;
 };
 
 module.exports = displayBranches; 

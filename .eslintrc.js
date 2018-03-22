@@ -3,6 +3,7 @@ module.exports = {
     "rules": {
         "padded-blocks": 1,
         "no-trailing-spaces": 1,
-        "space-in-parens": ["error", "never"]
+        "space-in-parens": ["error", "never"],
+        "padded-blocks": ["error", { "classes": "always" }]
     }
 };

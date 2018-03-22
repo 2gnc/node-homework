@@ -1,0 +1,17 @@
+.branch
+  display: inline-block
+  margin-left: 1em
+  padding: 0.5em
+  border: 1px solid silver
+  border-radius: 3px
+  &:hover
+    border-color: grey
+  &_default
+    color: red
+    border-color: red
+    &:hover
+      border-color: salmon
+  &__link
+    color: $mainColor
+    &:first-child .branch
+      margin-left: 0

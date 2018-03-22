@@ -1,5 +1,6 @@
 const express = require('express');
 const Gitloader = require('./gitloader');
+const brdsp = require('./controllers/display-branch');
 
 const router = express.Router();
 const gtl = new Gitloader();
@@ -15,8 +16,7 @@ router.get('/', (req, res) => {
 
   gtl.getBranches()
     .then((stdout) => {
-      let branches = stdout;
-      branches = branches.replace('* ', '*').split(' ').filter(item => item.length > 0);
+      const branches = brdsp(stdout);
       
       res.render('index', {
         title: 'Проверка2',

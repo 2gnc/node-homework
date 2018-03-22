@@ -1,9 +1,11 @@
+const path = require('path');
 const express = require('express');
-const index = require('./routes/index');
+const index = require('./routes');
 
 const app = express();
 
 // определяем шаблонизатор
+app.set('views', path.join('app/views'));
 app.set('view engine', 'pug');
 
 app.use('/', index);

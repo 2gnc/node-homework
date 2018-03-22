@@ -1,5 +1,5 @@
 const express = require('express');
-const Gitloader = require('../gitloader');
+const Gitloader = require('./gitloader');
 
 const router = express.Router();
 const gtl = new Gitloader();

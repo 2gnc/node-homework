@@ -8,6 +8,8 @@ const app = express();
 app.set('views', path.join('app/views'));
 app.set('view engine', 'pug');
 
+app.use(express.static(path.join('public')));
+
 app.use('/', index);
 
 module.exports = app;

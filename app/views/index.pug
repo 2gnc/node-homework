@@ -1,8 +1,9 @@
 html
   head
     title!= title
+    script(src="style.css")
   body
-    h1.header!= message
+    h1.heading!= message
     ul.branches
       each val in branches
         a(href = '/')

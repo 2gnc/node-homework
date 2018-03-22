@@ -7,6 +7,7 @@ const router = express.Router();
 const gtl = new Gitloader();
 
 let selectedBranch;
+let branches;
 
 // router.use((req, res, next) => {
 //   // специфический обработчик именно для этого маршрута
@@ -18,14 +19,7 @@ let selectedBranch;
 router.get('/', (req, res) => {
   gtl.getBranches()
     .then((stdout) => {
-      const branches = branchDisplay(stdout);
-      res.render('index', {
-        title: 'Проверка2',
-        message: 'Ветки:',
-        branches,
-        repo: gtl.getPath(),
-      });
-
+      branches = branchDisplay(stdout);
       return branches;
     })
     .then((branches) => {
@@ -39,8 +33,15 @@ router.get('/', (req, res) => {
       gtl.getBranchCommits(selectedBranch)
         .then((stdout) => {
           // тут вернется массив объектов - коммитов
-          // сюда или позже перенести рендер
-          commitsDisplay(stdout);
+          // сюда же перенести рендер
+          const commits = commitsDisplay(stdout);
+          res.render('index', {
+            title: 'Проверка2',
+            message: 'Ветки:',
+            branches,
+            commits,
+            repo: gtl.getPath(),
+          });
         });
     })
     .catch((stderr) => {

@@ -26,7 +26,7 @@ class gitloader {
 
   getBranchCommits(branch) {
     return new Promise((resolve, reject) => {
-      process.exec(`git log ${branch} --pretty=format:'%H %T %an %at /%s/'`, (error, stdout, stderr) => {
+      process.exec(`git log ${branch} --pretty=format:'(cHsh %H cHsh) (tHsh %T tHsh) (aut %an aut) (time %at time) (subj %s subj)++'`, (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }

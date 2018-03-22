@@ -6,7 +6,7 @@ const csso = require('gulp-csso');
 
 gulp.task('css', () => {
   return gulp.src('src/**/*.sass')
-    .pipe(sass())
+    .pipe(sass().on('error', sass.logError))
     .pipe(autopref({
       browsers: ['last 2 versions'],
       cascade: false,

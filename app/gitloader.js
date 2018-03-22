@@ -9,7 +9,7 @@ class gitloader {
 
   getBranches() {
     return new Promise((resolve, reject) => {
-      process.exec(`cd ${this.config.path} && git branch`, (error, stdout, stderr) => {
+      process.exec(`git -C ${this.config.path} branch`, (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }

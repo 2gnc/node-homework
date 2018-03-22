@@ -9,14 +9,18 @@ const displayBranches = (branch) => {
     .split(' ')
     .filter(item => item.length > 0)
     .map((item) => {
+      const name = item.replace('*', '');
       const isDefault = (item[0] === '*');
+      const link = `#branch-${name}`;
       return (
         {
-          name: item.replace('*', ''),
+          name,
           isDefault,
+          link,
         }
       );
     });
+
   return bra;
 };
 

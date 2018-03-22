@@ -1,12 +1,13 @@
 html
   head
     title!= title
-    script(src="style.css")
-  body
+    link(href="https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Mono" rel="stylesheet")
+    link(rel="stylesheet", href="style.css")
+  body.page
     h1.heading!= message
     ul.branches
       each val in branches
-        a(href = '/')
+        a.branch__link(href != val.link)
           if val.isDefault
             li.branch.branch_default= val.name
           else

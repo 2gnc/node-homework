@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
   gtl.getBranches()
     .then((stdout) => {
       const branches = brdsp(stdout);
-      
+
       res.render('index', {
         title: 'Проверка2',
         message: 'Ветки:',

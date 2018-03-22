@@ -2,6 +2,7 @@ const process = require('child_process');
 const config = require('./config');
 
 class gitloader {
+
   constructor() {
     this.config = config.repo;
   }
@@ -16,6 +17,6 @@ class gitloader {
       });
     });
   }
-}
 
+}
 module.exports = gitloader;

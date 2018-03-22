@@ -5,7 +5,7 @@
  */
 
 const displayBranches = (branch) => {
-  let brnch = branch.replace('* ', '*')
+  const brnch = branch.replace('* ', '*')
     .split(' ')
     .filter(item => item.length > 0);
 

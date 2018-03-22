@@ -1,7 +1,7 @@
 /**
- * @description Обрабатывает строку с ветками, возвращает массив объектов - веток. 
+ * @description Обрабатывает строку с ветками, возвращает массив объектов - веток.
  * @param {String} branches Все найденные командой ветки.
- * @returns {Aray}  
+ * @returns {Aray}
  */
 
 const displayBranches = (branch) => {
@@ -11,7 +11,7 @@ const displayBranches = (branch) => {
     .split(' ')
     .filter(item => item.length > 0)
     .map((item) => {
-      let itm = item.replace(re, '');
+      const itm = item.replace(re, '');
       const name = itm.replace('*', '');
       const isDefault = itm.indexOf('*') !== -1;
       const link = `#branch-${name}`;
@@ -21,8 +21,7 @@ const displayBranches = (branch) => {
         link,
       });
     });
-
   return bra;
 };
 
-module.exports = displayBranches; 
+module.exports = displayBranches;

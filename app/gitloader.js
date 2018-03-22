@@ -7,6 +7,10 @@ class gitloader {
     this.config = config.repo;
   }
 
+  getPath() {
+    return this.config.path;
+  }
+
   getBranches() {
     return new Promise((resolve, reject) => {
       process.exec(`git -C ${this.config.path} branch`, (error, stdout, stderr) => {

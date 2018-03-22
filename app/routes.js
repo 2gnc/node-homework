@@ -22,6 +22,7 @@ router.get('/', (req, res) => {
         title: 'Проверка2',
         message: 'Ветки:',
         branches,
+        repo: gtl.getPath(),
       });
     })
     .catch((stderr) => {

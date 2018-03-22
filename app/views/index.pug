@@ -4,7 +4,10 @@ html
     link(href="https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Mono" rel="stylesheet")
     link(rel="stylesheet", href="style.css")
   body.page
-    h1.heading!= message
+    a.logo__link(href="/")
+      h1.logo Локальный репозиторий
+    p.logo__repo-name=repo
+    h2.heading!= message
     ul.branches
       each val in branches
         a.branch__link(href != val.link)

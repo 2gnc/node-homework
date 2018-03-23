@@ -15,7 +15,7 @@ html(lang="ru")
           li.branch.branch_default
             strong!= val.name + " (сейчас в рабочей области)"
             span!= " || "   
-            a(href!= "/branchfiles/:" + val.name) см. файлы
+            a(href!= "/branchfiles/" + val.name) см. файлы
             span!= " || "
             a.branch__link(href!= val.link) см. коммиты
         else
@@ -34,6 +34,6 @@ html(lang="ru")
           div  
             span.commit__subject!= el.subject
             span.commit__autor!= el.comitter
-            a(href!= "/commitfiles/:"+ el.treeHash).commit__files см. файлы
+            a(href!= "/commitfiles/:"+ el.teeHash).commit__files см. файлы
 
 

@@ -1,13 +1,14 @@
-html
+html(lang="ru")
   head
+    meta(charset="UTF-8")
     title!= title
     link(href="https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Mono" rel="stylesheet")
-    link(rel="stylesheet", href="style.css")
+    //- link(rel="stylesheet", href="style.css")
   body.page
     a.logo__link(href="/")
       h1.logo Локальный репозиторий
     p.logo__repo-name=repo
-    h2.heading!= message
+    h2.heading Ветки:
     ul.branches
       each val in branches
         a.branch__link(href != val.link)
@@ -15,6 +16,7 @@ html
             li.branch.branch_default= val.name
           else
             li.branch=val.name
+    h3 Коммиты:
     ul.commits
       each el in commits
         li.commit

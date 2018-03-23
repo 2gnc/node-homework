@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node app/server.js & gulp sass-watch",
+    "dev": "node app/app.js & gulp sass-watch",
     "lint": "eslint app/**/*.js --ignore-pattern node_modules/; exit 0 "
   },
   "author": "",

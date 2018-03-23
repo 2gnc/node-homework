@@ -6,7 +6,7 @@ const config = {
     port: 3000,
   },
   repo: {
-    dateFormat: '',
+    dateFormat: 'DD MMM    YYYY HH:mm',
     path: '/home/ksenia/learn/shri/05-nodejs/node-homework',
   },
 };

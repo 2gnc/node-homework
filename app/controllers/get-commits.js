@@ -15,9 +15,11 @@ const getCommits = (stdout) => {
     .filter(itm => itm.length > 0)
     .map((item) => {
       let date;
-      const arr = item.split(/\n/).filter(itm => itm.length > 0);
+      const arr = item.split(/\n/)
+        .filter(itm => itm.length > 0);
       if (arr[3]) {
-        date = moment.unix(parseInt(arr[3])).format(config.repo.dateFormat);
+        date = moment.unix(parseInt(arr[3]))
+          .format(config.repo.dateFormat);
       }
       return {
         commitHash: arr[0] || '',

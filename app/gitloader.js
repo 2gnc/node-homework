@@ -1,5 +1,3 @@
-// git log branch-name --pretty=format:'%H %T %an %at /%s/' хэш коммита, хэш tree, имя автора, дата(unix timestamp), /тема/
-
 const process = require('child_process');
 const config = require('./config');
 
@@ -25,6 +23,7 @@ class gitloader {
   }
 
   getBranchCommits(branch) {
+    console.log('создаю промис getBranchCommits, ветка ', branch);
     return new Promise((resolve, reject) => {
       process.exec(`git log ${branch} --pretty=format:'%h\n%t\n%an\n%at\n%s++'`, (error, stdout, stderr) => {
         if (stderr) {

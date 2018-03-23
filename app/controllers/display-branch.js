@@ -14,7 +14,7 @@ const displayBranches = (branch) => {
       const itm = item.replace(re, '');
       const name = itm.replace('*', '');
       const isDefault = itm.indexOf('*') !== -1;
-      const link = `#branch-${name}`;
+      const link = `/branch/${name}`;
       return ({
         name,
         isDefault,

@@ -11,18 +11,11 @@ html(lang="ru")
     h2.heading Ветки:
     ul.branches
       each val in branches
-        if !isBranched
-          a.branch__link(href!= "branch/" + val.link)
-            if val.isDefault
-              li.branch.branch_default= val.name
-            else
-              li.branch=val.name
-        else
-          a.branch__link(href!= val.link)
-            if val.isDefault
-              li.branch.branch_default= val.name
-            else
-              li.branch=val.name
+        a.branch__link(href!= val.link)
+          if val.isDefault
+            li.branch.branch_default= val.name
+          else
+            li.branch=val.name
     h3 Коммиты:
     ul.commits
       each el in commits
@@ -32,6 +25,6 @@ html(lang="ru")
           div  
             span.commit__subject!= el.subject
             span.commit__autor!= el.comitter
-            a(href!= "#files:"+ el.treeHash).commit__files см. файлы
+            a(href!= "/#files:"+ el.treeHash).commit__files см. файлы
 
 

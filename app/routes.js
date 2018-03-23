@@ -9,14 +9,8 @@ const gtl = new Gitloader();
 let selectedBranch;
 let branches;
 
-// router.use((req, res, next) => {
-//   // специфический обработчик именно для этого маршрута
-//   /* ... */
-//   // next(); передает управление дальше
-//   next();
-// });
-
 router.get('/', (req, res) => {
+
   gtl.getBranches()
     .then((stdout) => {
       branches = branchDisplay(stdout);
@@ -35,17 +29,45 @@ router.get('/', (req, res) => {
           // тут вернется массив объектов - коммитов
           const commits = commitsDisplay(stdout);
           res.render('index', {
-            title: 'Проверка2',
-            message: 'Ветки:',
+            title: 'Просмотр репозитория',
             branches,
             commits,
             repo: gtl.getPath(),
           });
         });
     })
-    .catch((stderr) => {
-      console.log('что-то пошло не так: ', stderr);
-    });
+    .catch(err => console.log('что-то пошло не так: ', err));
+});
+
+router.get('/branch/:branch/', (req, res) => {
+  if(!branches) {
+    gtl.getBranches()
+      .then((stdout) => {
+        branches = branchDisplay(stdout);
+        return branches;
+      })
+      .then((bra) => {
+        bra.forEach((el) => {
+          if (el.isDefault) {
+            selectedBranch = el.name;
+          }
+        });
+      })
+      .catch(err => console.log('что-то пошло не так: ', err));
+  }
+
+  gtl.getBranchCommits(req.params.branch)
+    .then((commitsRaw) => {
+      const commits = commitsDisplay(commitsRaw);
+      console.log('ветки', branches);
+      res.render('index', {
+        title: 'Просмотр репозитория',
+        branches,
+        commits,
+        repo: gtl.getPath(),
+      });
+    })
+    .catch(err => console.log('что-то пошло не так: ', err));
 });
 
 module.exports = router;

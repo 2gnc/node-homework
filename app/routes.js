@@ -2,6 +2,7 @@ const express = require('express');
 const Gitloader = require('./gitloader');
 const branchDisplay = require('./controllers/display-branch');
 const commitsDisplay = require('./controllers/get-commits');
+const getTree = require('./controllers/get-tree');
 
 const router = express.Router();
 const gtl = new Gitloader();
@@ -73,8 +74,16 @@ router.get('/branch/:branch/', (req, res) => {
     .catch(err => console.log('что-то пошло не так: ', err));
 });
 
-router.get('/branchfiles/:branch', () => {
-
+router.get('/branchfiles/:branch', (req, res) => {
+  gtl.getBranchHash(req.params.branchfiles)
+    .then((hash) => {
+      gtl.getFilesTree(hash)
+        .then((tree) => {
+          const treeToDisplay = getTree(tree);
+          console.log(treeToDisplay);
+        });
+    })
+    .catch(err => console.log('что-то пошло не так: ', err));
 });
 
 module.exports = router;

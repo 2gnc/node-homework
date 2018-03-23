@@ -23,7 +23,6 @@ class gitloader {
   }
 
   getBranchCommits(branch) {
-    console.log('создаю промис getBranchCommits, ветка ', branch);
     return new Promise((resolve, reject) => {
       process.exec(`git log ${branch} --pretty=format:'%h\n%t\n%an\n%at\n%s++'`, (error, stdout, stderr) => {
         if (stderr) {

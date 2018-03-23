@@ -11,7 +11,6 @@ moment.locale('ru');
  */
 
 const getCommits = (stdout) => {
-  console.log('запускаю получение коммитов ');
   const commits = stdout.split('++')
     .filter(itm => itm.length > 0)
     .map((item) => {

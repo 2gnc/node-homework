@@ -7,20 +7,16 @@
  */
 
 const getCommits = (stdout) => {
-  const rCommit = /(?<=cHsh ).*(?=cHsh)/;
-  const rTree = /(?<=tHsh ).*(?=tHsh)/;
-  const rAut = /(?<=aut ).*(?=aut)/;
-  const rTime = /(?<=time ).*(?=time)/;
-  const rSubj = /(?<=subj ).*(?=subj)/;
 
-  let commits = stdout.split('++').map((item) => {
+  const commits = stdout.split('++').map((item) => {
+    const arr = item.split(/\n/).filter(itm => itm.length > 0);
     return {
-      commitHash: rCommit.exec(item),
-      treeHash: rTree.exec(item),
-      comitter: rAut.exec(item),
-      timestamp: rTime.exec(item),
-      subject: rSubj.exec(item),  
-    }
+      commitHash: arr[0],
+      treeHash: arr[1],
+      comitter: arr[2],
+      timestamp: arr[3],
+      subject: arr[4],
+    };
   });
   return commits;
 };

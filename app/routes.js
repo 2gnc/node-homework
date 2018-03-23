@@ -22,8 +22,8 @@ router.get('/', (req, res) => {
       branches = branchDisplay(stdout);
       return branches;
     })
-    .then((branches) => {
-      branches.forEach((el) => {
+    .then((bra) => {
+      bra.forEach((el) => {
         if (el.isDefault) {
           selectedBranch = el.name;
         }
@@ -33,7 +33,6 @@ router.get('/', (req, res) => {
       gtl.getBranchCommits(selectedBranch)
         .then((stdout) => {
           // тут вернется массив объектов - коммитов
-          // сюда же перенести рендер
           const commits = commitsDisplay(stdout);
           res.render('index', {
             title: 'Проверка2',

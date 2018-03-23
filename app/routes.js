@@ -33,6 +33,7 @@ router.get('/', (req, res) => {
             branches,
             commits,
             repo: gtl.getPath(),
+            selectedBranch,
           });
         });
     })
@@ -40,6 +41,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/branch/:branch/', (req, res) => {
+  selectedBranch = req.params.branch;
+
   if(!branches) {
     gtl.getBranches()
       .then((stdout) => {
@@ -59,15 +62,19 @@ router.get('/branch/:branch/', (req, res) => {
   gtl.getBranchCommits(req.params.branch)
     .then((commitsRaw) => {
       const commits = commitsDisplay(commitsRaw);
-      console.log('ветки', branches);
       res.render('index', {
         title: 'Просмотр репозитория',
         branches,
         commits,
         repo: gtl.getPath(),
+        selectedBranch,
       });
     })
     .catch(err => console.log('что-то пошло не так: ', err));
+});
+
+router.get('/branchfiles/:branch', () => {
+
 });
 
 module.exports = router;

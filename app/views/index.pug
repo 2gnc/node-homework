@@ -15,3 +15,14 @@ html
             li.branch.branch_default= val.name
           else
             li.branch=val.name
+    ul.commits
+      each el in commits
+        li.commit
+          div.commit__timebox
+            span.commit__time!= el.timestamp
+          div  
+            span.commit__subject!= el.subject
+            span.commit__autor!= el.comitter
+            a(href!= "#files:"+ el.treeHash).commit__files см. файлы
+
+

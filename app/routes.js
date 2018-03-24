@@ -11,32 +11,15 @@ let selectedBranch;
 let branches;
 
 router.get('/', (req, res) => {
-
   gtl.getBranches()
-    .then((stdout) => {
-      branches = branchDisplay(stdout);
-      return branches;
-    })
     .then((bra) => {
-      bra.forEach((el) => {
-        if (el.isDefault) {
-          selectedBranch = el.name;
+      console.log(bra);
+      bra.forEach((item) => {
+        if (item.isDefault) {
+          selectedBranch = item.name;
+          res.redirect(`/branch/${item.name}`);
         }
       });
-    })
-    .then(() => {
-      gtl.getBranchCommits(selectedBranch)
-        .then((stdout) => {
-          // тут вернется массив объектов - коммитов
-          const commits = commitsDisplay(stdout);
-          res.render('index', {
-            title: 'Просмотр репозитория',
-            branches,
-            commits,
-            repo: gtl.getPath(),
-            selectedBranch,
-          });
-        });
     })
     .catch(err => console.log('что-то пошло не так: ', err));
 });
@@ -44,13 +27,10 @@ router.get('/', (req, res) => {
 router.get('/branch/:branch/', (req, res) => {
   selectedBranch = req.params.branch;
 
-  if(!branches) {
+  if (!branches) {
     gtl.getBranches()
-      .then((stdout) => {
-        branches = branchDisplay(stdout);
-        return branches;
-      })
       .then((bra) => {
+        branches = bra;
         bra.forEach((el) => {
           if (el.isDefault) {
             selectedBranch = el.name;
@@ -62,28 +42,42 @@ router.get('/branch/:branch/', (req, res) => {
 
   gtl.getBranchCommits(req.params.branch)
     .then((commitsRaw) => {
-      const commits = commitsDisplay(commitsRaw);
-      res.render('index', {
-        title: 'Просмотр репозитория',
-        branches,
-        commits,
-        repo: gtl.getPath(),
-        selectedBranch,
-      });
+      gtl.getBranchHash(selectedBranch)
+        .then((hash) => {
+          const commits = commitsDisplay(commitsRaw);
+          res.render('index', {
+            title: 'Просмотр репозитория',
+            branches,
+            commits,
+            repo: gtl.getPath(),
+            selectedBranch,
+            hash,
+          });
+        });
     })
     .catch(err => console.log('что-то пошло не так: ', err));
 });
 
-router.get('/branchfiles/:branch', (req, res) => {
-  gtl.getBranchHash(req.params.branchfiles)
-    .then((hash) => {
-      gtl.getFilesTree(hash)
-        .then((tree) => {
-          const treeToDisplay = getTree(tree);
-          console.log(treeToDisplay);
-        });
+router.get('/seefiles/:hash/  ', (req, res) => {
+  gtl.getFilesTree(req.params.hash)
+    .then((fromGit) => {
+      const treeToDisplay = getTree(fromGit);
+      return treeToDisplay;
+    })
+    .then((inn) => {
+      console.log('пришло', inn);
+      res.render('files', {
+        title: 'Просмотр файлов',
+        repo: gtl.getPath(),
+        files: inn,
+        hash: req.params.hash,
+        from: '',
+      });
     })
     .catch(err => console.log('что-то пошло не так: ', err));
+  // выполнить команду гита 
+  // получить и обработать портянку с ответом гита
+  // отрендерить шаблон (files.pug)
 });
 
 module.exports = router;

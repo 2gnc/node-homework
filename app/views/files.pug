@@ -1,0 +1,24 @@
+html(lang="ru")
+  head
+    meta(charset="UTF-8")
+    title!= title
+    link(href="https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Mono" rel="stylesheet")
+    link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous")
+    link(rel="stylesheet", href="/style.css")
+  body.page
+    a.logo__link(href="/")
+      h1.logo Локальный репозиторий
+    p.logo__repo-name=repo
+    h3!= 'Файловая структура: ' + hash
+    p
+      a(href!= "/seefiles/"+ hash) вверх  
+    div.files
+      ul.file__list
+        each el in files 
+          li
+            if el.type === 'blob'
+              i(class="far fa-file file__icon")
+              a(href="/" class="file__file file__link")!= el.filename
+            else
+              i(class="far fa-folder-open file__icon")
+              a(href!= "/seefiles/" + el.hash class="file__folder file__link")!= el.filename

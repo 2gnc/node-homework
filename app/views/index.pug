@@ -3,7 +3,6 @@ html(lang="ru")
     meta(charset="UTF-8")
     title!= title
     link(href="https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Mono" rel="stylesheet")
-    //- link(rel="stylesheet", href="style.css")
     link(rel="stylesheet", href="/style.css")
   body.page
     a.logo__link(href="/")
@@ -16,17 +15,17 @@ html(lang="ru")
           li.branch.branch_default
             strong!= val.name + " (сейчас в рабочей области)"
             span!= " || "   
-            a(href!= "/branchfiles/" + val.name) см. файлы
+            a(href!= "/seefiles/" + hash) см. файлы
             span!= " || "
             a.branch__link(href!= val.link) см. коммиты
         else
           li.branch
             strong!= val.name
             span!= " || "
-            a(href!= "/branchfiles/:" + val.name) см. файлы
+            a(href!= "/seefiles/" + hash) см. файлы
             span!= " || "
             a.branch__link(href!= val.link) см. коммиты
-    h3!= "Коммиты ветки " +  selectedBranch
+    h3!= "Коммиты:"
     ul.commits
       each el in commits
         li.commit

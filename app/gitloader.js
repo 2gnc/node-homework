@@ -28,7 +28,22 @@ class gitloader {
         if (stderr) {
           reject(stderr);
         }
-        resolve(stdout);
+        const bra = stdout.replace('* ', '*')
+          .replace('\n', ' ')
+          .split(' ')
+          .filter(item => item.length > 0)
+          .map((item) => {
+            const itm = item.replace('\n', '');
+            const name = itm.replace('*', '');
+            const isDefault = itm.indexOf('*') !== -1;
+            const link = `/branch/${name}`;
+            return ({
+              name,
+              isDefault,
+              link,
+            });
+          });
+        resolve(bra);
       });
     });
   }

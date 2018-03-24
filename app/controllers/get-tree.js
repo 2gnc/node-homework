@@ -1,3 +1,8 @@
+/**
+ * 
+ * @param {String} input Результат выполенния команды git ls-tree 
+ * @returns {Object} Разобранная по файлам/папкам команда
+ */
 
 const getFilesTree = (input) => {
   const filesAndCats = input.split('\n')
@@ -12,7 +17,6 @@ const getFilesTree = (input) => {
       };
     });
 
-  console.log(filesAndCats);
   return filesAndCats;
 };
 module.exports = getFilesTree;

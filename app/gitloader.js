@@ -1,5 +1,9 @@
 const process = require('child_process');
 const config = require('./config');
+const moment = require('moment');
+
+moment.locale('ru');
+
 
 class gitloader {
 
@@ -48,13 +52,31 @@ class gitloader {
     });
   }
 
-  getBranchCommits(branch) {
+  getBranchCommits(bra) {
     return new Promise((resolve, reject) => {
-      process.exec(`git log ${branch} --pretty=format:'%h\n%t\n%an\n%at\n%s++'`, (error, stdout, stderr) => {
+      process.exec(`git log ${bra} --pretty=format:'%h\n%t\n%an\n%at\n%s++'`, (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }
-        resolve(stdout);
+        let commits = stdout.split('++')
+          .filter(item => item.length > 0)
+          .map((item) => {
+            let date;
+            const arr = item.split('\n')
+              .filter(elt => elt.length > 0);
+            if (arr[3]) {
+              date = moment.unix(parseInt(arr[3]))
+                .format(config.repo.dateFormat)
+            }
+            return {
+              commitHash: arr[0] || '',
+              treeHash: arr[1] || '',
+              comitter: arr[2] || '',
+              timestamp: date || '',
+              subject: arr[4] || '',
+            }
+          })
+        resolve(commits);
       });
     });
   }

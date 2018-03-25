@@ -10,10 +10,10 @@ const gtl = new Gitloader();
 let selectedBranch;
 let branches;
 
+
 router.get('/', (req, res) => {
   gtl.getBranches()
     .then((bra) => {
-      console.log(bra);
       bra.forEach((item) => {
         if (item.isDefault) {
           selectedBranch = item.name;
@@ -25,6 +25,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/branch/:branch/', (req, res) => {
+
   selectedBranch = req.params.branch;
 
   if (!branches) {
@@ -35,37 +36,32 @@ router.get('/branch/:branch/', (req, res) => {
           if (el.isDefault) {
             selectedBranch = el.name;
           }
+        
         });
       })
       .catch(err => console.log('что-то пошло не так: ', err));
   }
 
   gtl.getBranchCommits(req.params.branch)
-    .then((commitsRaw) => {
-      gtl.getBranchHash(selectedBranch)
-        .then((hash) => {
-          const commits = commitsDisplay(commitsRaw);
-          res.render('index', {
-            title: 'Просмотр репозитория',
-            branches,
-            commits,
-            repo: gtl.getPath(),
-            selectedBranch,
-            hash,
-          });
-        });
+    .then((obj) => {
+      res.render('index', {
+        title: 'Просмотр репозитория',
+        branches,
+        commits: obj,
+        repo: gtl.getPath(),
+        selectedBranch,
+      });
     })
-    .catch(err => console.log('что-то пошло не так: ', err));
+    .catch(err => console.log('что-то пошло не так: ', err)); 
 });
 
-router.get('/seefiles/:hash/  ', (req, res) => {
+router.get('/seefiles/:hash/', (req, res) => {
   gtl.getFilesTree(req.params.hash)
     .then((fromGit) => {
       const treeToDisplay = getTree(fromGit);
       return treeToDisplay;
     })
     .then((inn) => {
-      console.log('пришло', inn);
       res.render('files', {
         title: 'Просмотр файлов',
         repo: gtl.getPath(),

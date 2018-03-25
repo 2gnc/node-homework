@@ -11,8 +11,8 @@ html(lang="ru")
     p.logo__repo-name=repo
     h3!= 'Файловая структура'
     p
-      if back !== ''
-        a(href!= "/seefiles/"+ back) вверх  
+      if back
+        a(href!= "/seefiles/" + back) вверх
     div.files
       ul.file__list
         each el in files 

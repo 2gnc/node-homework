@@ -65,7 +65,6 @@ router.get('/seefiles/:path', (req, res) => {
       .reverse();
     arr.shift();
     arr = arr.reverse().join('&');
-
     return arr;
   })();
 

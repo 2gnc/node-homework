@@ -34,6 +34,4 @@ html(lang="ru")
           div  
             span.commit__subject!= el.subject
             span.commit__autor!= el.comitter
-            a(href!= "/commitfiles/"+ el.treeHash).commit__files см. файлы
-
-
+            a(href!= "/seefiles/" + el.treeHash).commit__files см. файлы

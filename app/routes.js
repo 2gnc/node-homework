@@ -1,8 +1,5 @@
 const express = require('express');
 const Gitloader = require('./gitloader');
-const branchDisplay = require('./controllers/display-branch');
-const commitsDisplay = require('./controllers/get-commits');
-const getTree = require('./controllers/get-tree');
 
 const router = express.Router();
 const gtl = new Gitloader();
@@ -57,10 +54,6 @@ router.get('/branch/:branch/', (req, res) => {
 
 router.get('/seefiles/:hash/', (req, res) => {
   gtl.getFilesTree(req.params.hash)
-    .then((fromGit) => {
-      const treeToDisplay = getTree(fromGit);
-      return treeToDisplay;
-    })
     .then((inn) => {
       res.render('files', {
         title: 'Просмотр файлов',

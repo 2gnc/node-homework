@@ -7,7 +7,7 @@ html(lang="ru")
     link(rel="stylesheet", href="/style.css")
   body.page
     a.logo__link(href="/")
-      h1.logo Локальный репозиторий
+      h1.logo Просмотр репозитория
     p.logo__repo-name=repo
     h3!= 'Файловая структура'
     p
@@ -19,7 +19,7 @@ html(lang="ru")
           li
             if el.type === 'blob'
               i(class="far fa-file file__icon")
-              a(href="/" class="file__file file__link")!= el.filename
+              a(href!= "/file/" + el.hash + "/" + path class="file__file file__link")!= el.filename
             else
               i(class="far fa-folder-open file__icon")
               a(href!= "/seefiles/" + path + "&" + el.hash class="file__folder file__link")!= el.filename

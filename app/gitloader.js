@@ -58,15 +58,15 @@ class gitloader {
         if (stderr) {
           reject(stderr);
         }
-        let commits = stdout.split('++')
+        const commits = stdout.split('++')
           .filter(item => item.length > 0)
           .map((item) => {
             let date;
             const arr = item.split('\n')
               .filter(elt => elt.length > 0);
             if (arr[3]) {
-              date = moment.unix(parseInt(arr[3]))
-                .format(config.repo.dateFormat)
+              date = moment.unix(parseInt(arr[3]), 10)
+                .format(config.repo.dateFormat);
             }
             return {
               commitHash: arr[0] || '',
@@ -74,8 +74,8 @@ class gitloader {
               comitter: arr[2] || '',
               timestamp: date || '',
               subject: arr[4] || '',
-            }
-          })
+            };
+          });
         resolve(commits);
       });
     });
@@ -99,6 +99,17 @@ class gitloader {
             };
           });
         resolve(filesAndCats);
+      });
+    });
+  }
+
+  openFile(hash) {
+    return new Promise((resolve, reject) => {
+      process.exec(`git -C ${this.config.path} cat-file blob ${hash}`, (error, stdout, stderr) => {
+        if (stderr) {
+          reject(stderr);
+        }
+        resolve(stdout);
       });
     });
   }

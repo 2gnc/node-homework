@@ -4,6 +4,9 @@ module.exports = {
         "padded-blocks": 1,
         "no-trailing-spaces": 1,
         "space-in-parens": ["error", "never"],
-        "padded-blocks": ["error", { "classes": "always" }]
+        "padded-blocks": ["error", { "classes": "always" }],
+        "no-console": 0,
+        "class-methods-use-this": 0,
+        "radix": 0
     }
 };

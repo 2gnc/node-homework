@@ -52,21 +52,35 @@ router.get('/branch/:branch/', (req, res) => {
     .catch(err => console.log('что-то пошло не так: ', err)); 
 });
 
-router.get('/seefiles/:hash/', (req, res) => {
-  gtl.getFilesTree(req.params.hash)
+router.get('/seefiles/:path', (req, res) => {
+  
+  const hash = (() => {
+    const arr = req.params.path.split('&').reverse();
+    return arr[0];
+  })();
+
+  const back = (() => {
+    let arr = req.params.path
+      .split('&')
+      .reverse();
+    arr.shift();
+    arr = arr.reverse().join('&');
+
+    return arr;
+  })();
+
+  gtl.getFilesTree(hash)
     .then((inn) => {
       res.render('files', {
         title: 'Просмотр файлов',
         repo: gtl.getPath(),
         files: inn,
-        hash: req.params.hash,
-        from: '',
+        path: req.params.path,
+        thisIs: hash,
+        back,
       });
     })
     .catch(err => console.log('что-то пошло не так: ', err));
-  // выполнить команду гита 
-  // получить и обработать портянку с ответом гита
-  // отрендерить шаблон (files.pug)
 });
 
 module.exports = router;

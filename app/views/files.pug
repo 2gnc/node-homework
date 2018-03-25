@@ -9,9 +9,10 @@ html(lang="ru")
     a.logo__link(href="/")
       h1.logo Локальный репозиторий
     p.logo__repo-name=repo
-    h3!= 'Файловая структура: ' + hash
+    h3!= 'Файловая структура'
     p
-      a(href!= "/seefiles/"+ hash) вверх  
+      if back !== ''
+        a(href!= "/seefiles/"+ back) вверх  
     div.files
       ul.file__list
         each el in files 
@@ -21,4 +22,4 @@ html(lang="ru")
               a(href="/" class="file__file file__link")!= el.filename
             else
               i(class="far fa-folder-open file__icon")
-              a(href!= "/seefiles/" + el.hash class="file__folder file__link")!= el.filename
+              a(href!= "/seefiles/" + path + "&" + el.hash class="file__folder file__link")!= el.filename

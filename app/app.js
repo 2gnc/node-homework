@@ -13,14 +13,14 @@ app.set('view engine', 'pug');
 app.use(express.static(path.join('public')));
 
 app.use('/', routes);
-
+/* eslint-disable no-unused-vars */
 app.use((err, req, res, next) => {
   res.status(500).send(res.render('error.pug', {
     repo: gtl.getPath(),
     msg: err,
   }));
 });
-
+/* eslint-enable no-unused-vars */
 app.listen(config.app.port, config.app.host);
 
 module.exports = app;

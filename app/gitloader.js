@@ -33,8 +33,7 @@ class gitloader {
           reject(stderr);
         }
         const bra = stdout.replace('* ', '*')
-          .replace('\n', ' ')
-          .split(' ')
+          .split('\n')
           .filter(item => item.length > 0)
           .map((item) => {
             const itm = item.replace('\n', '');
@@ -54,7 +53,7 @@ class gitloader {
 
   getBranchCommits(bra) {
     return new Promise((resolve, reject) => {
-      process.exec(`git log ${bra} --pretty=format:"%h--%t--%an--%at--%s++"`, (error, stdout, stderr) => {
+      process.exec(`git -C ${this.config.path} log ${bra} --pretty=format:"%h--%t--%an--%at--%s++"`, (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }

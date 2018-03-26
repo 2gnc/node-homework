@@ -2,7 +2,7 @@
 
 const config = {
   app: {
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 3333,
   },
   repo: {

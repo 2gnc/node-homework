@@ -1,30 +1,31 @@
 const Gitloader = require('../gitloader');
+
 const gtl = new Gitloader();
 
 module.exports = (req, res, next) => {
-    let selectedBranch = req.params.branch;
-    let branches;
+  let selectedBranch = req.params.branch;
+  let branches;
 
-    gtl.getBranches()
-        .then((bra) => {
-            branches = bra;
-            bra.forEach((el) => {
-                if (el.isDefault) {
-                    selectedBranch = el.name;        
-                }
-            });
-        })
-        .catch(err => console.log('что-то пошло не так: ', err));
+  let stepOne = gtl.getBranches();
+  let stepTwo = gtl.getBranchCommits(req.params.branch);
 
-    gtl.getBranchCommits(req.params.branch)
-        .then((obj) => {
-            res.render('index', {
-            title: 'Просмотр репозитория',
-            branches,
-            commits: obj,
-            repo: gtl.getPath(),
-            selectedBranch,
-            });
-        })
-        .catch(err => console.log('что-то пошло не так: ', err));
-}
+  Promise.all([stepOne, stepTwo])
+    .then((val) => {
+      branches = val[0];
+      
+      val[0].forEach((el) => {
+        if (el.isDefault) {
+          selectedBranch = el.name;
+        }
+      });
+
+      res.render('index', {
+        title: 'Просмотр репозитория',
+        branches,
+        commits: val[1],
+        repo: gtl.getPath(),
+        selectedBranch,
+      })
+    })
+    .catch(err => console.log('что-то пошло не так: ', err));
+};

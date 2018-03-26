@@ -11,5 +11,5 @@ module.exports = (req, res, next) => {
         }
       });
     })
-    .catch(err => console.log('что-то пошло не так: ', err));
+    .catch(err => next(err));
 };

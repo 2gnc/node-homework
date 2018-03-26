@@ -4,17 +4,12 @@ const Gitloader = require('./gitloader');
 const router = express.Router();
 const gtl = new Gitloader();
 
-let selectedBranch;
-let branches;
-
-
 router.get('/', (req, res) => {
 
   gtl.getBranches()
     .then((bra) => {
       bra.forEach((item) => {
         if (item.isDefault) {
-          selectedBranch = item.name;
           res.redirect(`/branch/${item.name}`);
         }
       });
@@ -24,20 +19,19 @@ router.get('/', (req, res) => {
 
 router.get('/branch/:branch/', (req, res) => {
 
-  selectedBranch = req.params.branch;
+  let selectedBranch = req.params.branch;
+  let branches;
 
-  if (!branches) {
-    gtl.getBranches()
-      .then((bra) => {
-        branches = bra;
-        bra.forEach((el) => {
-          if (el.isDefault) {
-            selectedBranch = el.name;
-          }
-        });
-      })
-      .catch(err => console.log('что-то пошло не так: ', err));
-  }
+  gtl.getBranches()
+    .then((bra) => {
+      branches = bra;
+      bra.forEach((el) => {
+        if (el.isDefault) {
+          selectedBranch = el.name;
+        }
+      });
+    })
+    .catch(err => console.log('что-то пошло не так: ', err));
 
   gtl.getBranchCommits(req.params.branch)
     .then((obj) => {

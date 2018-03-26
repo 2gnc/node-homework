@@ -54,7 +54,7 @@ class gitloader {
 
   getBranchCommits(bra) {
     return new Promise((resolve, reject) => {
-      process.exec(`git log ${bra} --pretty=format:'%h\n%t\n%an\n%at\n%s++'`, (error, stdout, stderr) => {
+      process.exec(`git log ${bra} --pretty=format:"%h--%t--%an--%at--%s++"`, (error, stdout, stderr) => {  
         if (stderr) {
           reject(stderr);
         }
@@ -62,7 +62,7 @@ class gitloader {
           .filter(item => item.length > 0)
           .map((item) => {
             let date;
-            const arr = item.split('\n')
+            const arr = item.split('--')
               .filter(elt => elt.length > 0);
             if (arr[3]) {
               date = moment.unix(parseInt(arr[3]), 10)

@@ -9,6 +9,7 @@ let branches;
 
 
 router.get('/', (req, res) => {
+
   gtl.getBranches()
     .then((bra) => {
       bra.forEach((item) => {

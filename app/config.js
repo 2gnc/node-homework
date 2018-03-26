@@ -3,11 +3,11 @@
 const config = {
   app: {
     host: 'localhost',
-    port: 3000,
+    port: 3333,
   },
   repo: {
-    dateFormat: 'DD MMM    YYYY HH:mm',
-    path: '/home/ksenia/learn/shri/05-nodejs/node-homework',
+    dateFormat: 'DD MMM YYYY HH:mm',
+    path: 'C:/Users/k.polyakova/node-homework',
   },
 };
 

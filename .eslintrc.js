@@ -7,6 +7,7 @@ module.exports = {
         "padded-blocks": ["error", { "classes": "always" }],
         "no-console": 0,
         "class-methods-use-this": 0,
-        "radix": 0
+        "radix": 0,
+        "linebreak-style": 0
     }
 };

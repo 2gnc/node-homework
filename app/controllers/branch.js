@@ -5,14 +5,15 @@ const gtl = new Gitloader();
 module.exports = (req, res, next) => {
   let selectedBranch = req.params.branch;
   let branches;
+  let obj;
 
-  let stepOne = gtl.getBranches();
-  let stepTwo = gtl.getBranchCommits(req.params.branch);
+  const stepOne = gtl.getBranches();
+  const stepTwo = gtl.getBranchCommits(req.params.branch);
 
   Promise.all([stepOne, stepTwo])
     .then((val) => {
-      branches = val[0];
-      
+      [branches, obj] = val;
+
       val[0].forEach((el) => {
         if (el.isDefault) {
           selectedBranch = el.name;
@@ -22,10 +23,10 @@ module.exports = (req, res, next) => {
       res.render('index', {
         title: 'Просмотр репозитория',
         branches,
-        commits: val[1],
+        commits: obj,
         repo: gtl.getPath(),
         selectedBranch,
-      })
+      });
     })
     .catch(err => console.log('что-то пошло не так: ', err));
 };

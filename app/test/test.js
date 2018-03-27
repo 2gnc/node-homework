@@ -2,7 +2,6 @@
 
 // Сценарии
 
-// 4. В списке веток одна и больше веток
 // 5. В списке коммитов возвращается массив коммитов (от 0 и длиннее)
 // 6. Возвращается список файлов в репозитории в корнеи этот список не пустой
 
@@ -22,13 +21,12 @@ describe('Функции запросов в гит', () => {
 
     it('Можно получить хэш ветки', async () => {
       const path = gitL.getPath();
-      
-      let testHash = await gitL.getBranchHash('master');
+      const testHash = await gitL.getBranchHash('master');
       assert.equal(testHash.length > 40, true);
     });
 
-    it('в списке веток не меньше одной ветки', () => {
-      // получить список веток
-      // 
+    it('в списке веток не меньше одной ветки', async () => {
+      const branches = await gitL.getBranches();
+      assert.equal(branches.length >= 1, true); 
     });
 });

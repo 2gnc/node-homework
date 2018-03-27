@@ -1,9 +1,9 @@
 /* eslint-disable */
 
 // Сценарии
-
-// 5. В списке коммитов возвращается массив коммитов (от 0 и длиннее)
-// 6. Возвращается список файлов в репозитории в корнеи этот список не пустой
+// TOOD
+// 7. ветки парсятся правильно
+// 8. коммиты парсятся правильно
 
 const assert = require('assert');
 const {expect} = require('chai');
@@ -28,5 +28,13 @@ describe('Функции запросов в гит', () => {
     it('в списке веток не меньше одной ветки', async () => {
       const branches = await gitL.getBranches();
       assert.equal(branches.length >= 1, true); 
+    });
+
+    it('можем получить массив коммитов', async () => {
+      // так можно? Или это уже интеграционный тест?
+      const branch = await gitL.getBranches();
+      const branchname = branch[0].name;
+      const commits = await gitL.getBranchCommits(branchname);
+      assert.equal(Boolean(commits.length), true);
     });
 });

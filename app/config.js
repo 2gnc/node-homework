@@ -7,7 +7,7 @@ const config = {
   },
   repo: {
     dateFormat: 'DD MMM YYYY HH:mm',
-    path: 'C:/Users/k.polyakova/cv',
+    path: '/home/ksenia/learn/shri/05-nodejs/node-homework',
   },
 };
 

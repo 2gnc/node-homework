@@ -1,0 +1,44 @@
+sudo: false
+language: node_js
+node_js:
+- 9
+
+before_script:
+- npm i
+
+script:
+- npm run lint
+- npm run prod
+
+cache:
+  directories:
+  - node_modules
+
+aliases:
+  deploy: &deploy
+    provider: heroku
+    api_key:
+      secure: Xy0ciqJCb7fRY+kw2xcCTrKX/SkNaA0wJJ0ZVyFCx99cLEfNxPcMTCpSq9+93PhidaPamDR8AjkfYslUeaCGszIWMHs0koz9JXKOF4FbygtLYGNXITug+BdbIgKH8ZcjjqUHHM71/arruP8fdavDQ1FH+Vm/zBAMxxO1Qy4Epc7OWawika11DHAKTBWDOST7MY+IJ8FVNUU+tVGv47K8VLf7iDlddn6gXeAexMjXG9rMh8xs0sGk1WM5kTrx+UsJe25gzv3JRjSGwJYasXT2VmJcodDd1V2uiGhmZQe21J3pgN8CyO0EB7vOjDJ6ZtXuDjbOvRMNmTas/CsIK2P61NAQ5TQBgU/8oaLzDGNpSFD3eizm360KkqJVSBD6ONABzX5ApC6aZD8pok0r2VfHXL43Bg1p2jE43htX5ILJBSMXJXhUMfReRWMf3gGaqMARm4RGbq4n2h5WoqeavtyIjQqkG+hX5D7RdmUQ//Ap6uvUqIjlgxbNCLZnlpVJ/4jmS7EKjmJMaZrHGrnN28uVHw1hY/TJ9WTniIH3aCDjm3c9A1lSS6RbkuO/DShtgZ660c//roYRetIKhwOeeuxCc3gIFMnVxso32QopQy3UG+n2Q1vFMdgyk0Od77ndTQAgw1yj5evrabTBIuUciC2I2Gqj60SWeJqx0ec6KXZClf8=
+    skip_cleanup: true
+
+jobs:
+  include:
+    - stage: Deploy (development)
+      if: tag IS blank
+      deploy:
+        <<: *deploy
+        app: node-git-development
+        on:
+          all_branches: true
+
+    - stage: Deploy (production)
+      if: tag IS present
+      deploy:
+        <<: *deploy
+        app: node-git-production
+        on:
+          tags: true
+          all_branches: true
+build:
+  docker:
+    web: Dockerfile

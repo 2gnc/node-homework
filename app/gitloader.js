@@ -9,6 +9,13 @@ class gitloader {
 
   constructor() {
     this.config = config.repo;
+    this.commands = {
+      getHash: `git -C ${this.config.path} rev-parse`,
+      getBranches: `git -C ${this.config.path} branch`,
+      getCommits: `git -C ${this.config.path} log --pretty=format:"%h--%t--%an--%at--%s++"`,
+      getFiles: `git -C ${this.config.path} ls-tree`,
+      openFile: `git -C ${this.config.path} cat-file blob`,
+    };
   }
 
   getPath() {
@@ -17,7 +24,7 @@ class gitloader {
 
   getBranchHash(bra) {
     return new Promise((resolve, reject) => {
-      process.exec(`git -C ${this.config.path} rev-parse ${bra}`, (error, stdout, stderr) => {
+      process.exec(`${this.commands.getHash} ${bra}`, (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }
@@ -28,7 +35,7 @@ class gitloader {
 
   getBranches() {
     return new Promise((resolve, reject) => {
-      process.exec(`git -C ${this.config.path} branch`, (error, stdout, stderr) => {
+      process.exec(`${this.commands.getBranches}`, (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }
@@ -53,7 +60,7 @@ class gitloader {
 
   getBranchCommits(bra) {
     return new Promise((resolve, reject) => {
-      process.exec(`git -C ${this.config.path} log ${bra} --pretty=format:"%h--%t--%an--%at--%s++"`, (error, stdout, stderr) => {
+      process.exec(`${this.commands.getCommits} ${bra}`, (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }
@@ -82,7 +89,7 @@ class gitloader {
 
   getFilesTree(hash) {
     return new Promise((resolve, reject) => {
-      process.exec(`git -C ${this.config.path} ls-tree ${hash}`, (error, stdout, stderr) => {
+      process.exec(`${this.commands.getFiles} ${hash}`, (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }
@@ -104,7 +111,7 @@ class gitloader {
 
   openFile(hash) {
     return new Promise((resolve, reject) => {
-      process.exec(`git -C ${this.config.path} cat-file blob ${hash}`, (error, stdout, stderr) => {
+      process.exec(`${this.commands.openFile} ${hash}`, (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }

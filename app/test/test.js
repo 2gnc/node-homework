@@ -1,17 +1,25 @@
 /* eslint-disable */
 
 // Сценарии
-// TOOD
+//  TOOD
 // 7. ветки парсятся правильно
 // 8. коммиты парсятся правильно
 
 const assert = require('assert');
 const {expect} = require('chai');
-const gitCli = require('./stab');
+const gitStab = require('./stab');
 const gitLoader = require('../gitloader');
 
+class fakeGitLoader extends gitLoader {
+  runCommand(command) {
+    return (
+      gitStab()
+    );
+  };
+};
+const fakeGit = new fakeGitLoader();
 
-describe('Функции запросов в гит', () => {
+describe('Функции запросов в гит (gitLoader)', () => {
 
   const gitL = new gitLoader();
 

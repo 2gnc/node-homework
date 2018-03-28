@@ -1,15 +1,15 @@
-const execMock = (command, path) => {
-  if (command === `git -C ${path} rev-parse master`) {
+const execMock = (command) => {
+  if (command === 'git-hash') {
     return (
       'c81c54188f90b4aa6e3cbb80614d25647e8df2d3'
     );
   }
-  if (command === `git -C ${path} branch`) {
+  if (command === 'git-branch') {
     return (
       '* master\nuser-interface'
     );
   }
-  if (command === `git -C ${path} log master --pretty=format:"%h--%t--%an--%at--%s++"`) {
+  if (command === 'git-commits') {
     return (
       'c81c541--616308d--Ksenia Polyakova--1522154140--initial commit++'
     );

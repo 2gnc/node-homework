@@ -1,3 +1,6 @@
+// вынести в отдельные функции обращения к git и парсинг результатов. 
+// тестировать парсинг результатов?
+
 const process = require('child_process');
 const config = require('./config');
 const moment = require('moment');

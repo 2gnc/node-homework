@@ -25,16 +25,41 @@ class gitloader {
     return this.config.path;
   }
 
-  getBranchHash(bra) {
+  /**
+   * 
+   * @param {String} command Текстовый шаблон команды из this.commands. 
+   * @param {*} params Дополнительные параметры, необходимые для конкретной гит - команды.
+   * @returns {*} Промис, который резолвится с текстом ответа got Cli.
+   */
+  gitExec(command, ...params) {
     return new Promise((resolve, reject) => {
-      process.exec(`${this.commands.getHash} ${bra}`, (error, stdout, stderr) => {
+      process.exec(`${command} ${params}`, (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }
         resolve(stdout);
       });
+      
     });
   }
+
+  getBranchHash(bra) {
+    this.gitExec(this.commands.getHash, bra)
+      .then((hash) => {
+        console.log(hash);
+      })
+  }
+
+  // getBranchHash(bra) {
+  //   return new Promise((resolve, reject) => {
+  //     process.exec(`${this.commands.getHash} ${bra}`, (error, stdout, stderr) => {
+  //       if (stderr) {
+  //         reject(stderr);
+  //       }
+  //       resolve(stdout);
+  //     });
+  //   });
+  // }
 
   getBranches() {
     return new Promise((resolve, reject) => {

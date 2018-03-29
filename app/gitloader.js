@@ -31,35 +31,21 @@ class gitloader {
    * @param {*} params Дополнительные параметры, необходимые для конкретной гит - команды.
    * @returns {*} Промис, который резолвится с текстом ответа got Cli.
    */
-  gitExec(command, ...params) {
+  gitExec(command, param) {
     return new Promise((resolve, reject) => {
-      process.exec(`${command} ${params}`, (error, stdout, stderr) => {
+      process.exec(`${command} ${param}`, (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }
         resolve(stdout);
       });
-      
     });
   }
 
   getBranchHash(bra) {
-    this.gitExec(this.commands.getHash, bra)
-      .then((hash) => {
-        console.log(hash);
-      })
+    return this.gitExec(this.commands.getHash, bra)
+      .catch();
   }
-
-  // getBranchHash(bra) {
-  //   return new Promise((resolve, reject) => {
-  //     process.exec(`${this.commands.getHash} ${bra}`, (error, stdout, stderr) => {
-  //       if (stderr) {
-  //         reject(stderr);
-  //       }
-  //       resolve(stdout);
-  //     });
-  //   });
-  // }
 
   getBranches() {
     return new Promise((resolve, reject) => {

@@ -39,7 +39,6 @@ describe('Функции запросов в гит (gitLoader)', () => {
     });
 
     it('можем получить массив коммитов', async () => {
-      // так можно? Или это уже интеграционный тест?
       const branch = await gitL.getBranches();
       const branchname = branch[0].name;
       const commits = await gitL.getBranchCommits(branchname);

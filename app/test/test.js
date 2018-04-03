@@ -1,10 +1,5 @@
 /* eslint-disable */
 
-// Сценарии
-//  TOOD
-// 7. ветки парсятся правильно
-// 8. коммиты парсятся правильно
-
 const assert = require('assert');
 const {expect} = require('chai');
 const gitStab = require('./stab');

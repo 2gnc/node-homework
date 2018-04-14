@@ -1,6 +1,5 @@
 function controllerFactory(loader) {
   return (req, res, next) => {
-
     let selectedBranch = req.params.branch;
     let branches;
     let obj;

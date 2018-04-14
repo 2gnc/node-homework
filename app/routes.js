@@ -6,9 +6,15 @@ const file = require('./controllers/file');
 
 const router = express.Router();
 
-router.get('/', home);
-router.get('/branch/:branch/', branch);
-router.get('/seefiles/:path', files);
-router.get('/file/:hash/:from', file);
+// подключаю лоадер
+const Gitloader = require('./gitloader');
+
+const gtl = new Gitloader();
+
+
+router.get('/', home(gtl));
+router.get('/branch/:branch/', branch(gtl));
+router.get('/seefiles/:path', files(gtl));
+router.get('/file/:hash/:from', file(gtl));
 
 module.exports = router;

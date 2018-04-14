@@ -1,14 +1,14 @@
-const Gitloader = require('../gitloader');
+function controllerFactory(loader) {
+  return (req, res, next) => {
+    loader.openFile(req.params.hash)
+      .then((fileText) => {
+        res.render('file', {
+          text: fileText,
+          back: req.params.from,
+        });
+      })
+      .catch(err => next(err));
+  };
+}
 
-const gtl = new Gitloader();
-
-module.exports = (req, res, next) => {
-  gtl.openFile(req.params.hash)
-    .then((fileText) => {
-      res.render('file', {
-        text: fileText,
-        back: req.params.from,
-      });
-    })
-    .catch(err => next(err));
-};
+module.exports = controllerFactory;

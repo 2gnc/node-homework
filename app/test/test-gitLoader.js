@@ -47,22 +47,20 @@ describe('gitLoader', () => {
 
   it('getBranches правильно парсит ответ git cli', (done) => {
 
-    const gtlToTest = new TestGtl();
+    class Test2Gtl extends Gl {
+      constructor() {
+        super();
+        this.config = config.repo;
+        this.process = {
+          exec: () => {Promise.resolve('* master\nui')},
+        };
+      }
+    
+    }
+    const gtlToTest = new Test2Gtl();
 
-    const myAPI = {
-      exec: () => {
-        console.log(444);
-        return ('* master\nui');
-      },
-    };
-    const process = sinon.stub();
-
-    gtlToTest.getBranches().then((out) => {
-      console.log(out);
-
-    }).then(() => {
-      done();
-    });
+    gtlToTest.getBranches();
+    
 
   });
 });

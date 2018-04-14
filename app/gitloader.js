@@ -50,7 +50,7 @@ class gitloader {
 
   getBranches() {
     return new Promise((resolve, reject) => {
-      this.process.exec(`${this.commands.getBranches}`, (error, stdout, stderr) => {
+      const cb = (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }
@@ -69,7 +69,9 @@ class gitloader {
             });
           });
         resolve(bra);
-      });
+      };
+
+      this.process.exec(`${this.commands.getBranches}`, cb);
     });
   }
 

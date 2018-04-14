@@ -55,12 +55,12 @@ describe('gitLoader', () => {
           exec: () => {Promise.resolve('* master\nui')},
         };
       }
-    
+
     }
     const gtlToTest = new Test2Gtl();
-
-    gtlToTest.getBranches();
     
+
+    gtlToTest.getBranches().then((data) => {console.log(data); done();});
 
   });
 });

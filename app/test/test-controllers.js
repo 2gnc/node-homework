@@ -144,5 +144,123 @@ describe('Роуты', () => {
 
   });
 
+  it('роут /files должен вызывать метод render() с правильными параметрами если обращение к git выполнено успешно', () => {
+
+    const gitLoaderStub = {
+      getFilesTree: () => Promise.resolve([{
+        type: 'blob',
+        hash: '000',
+        filename: 'some',
+      }]),
+      getPath: () => '//',
+    };
+
+    const request = {
+      params: {
+        hash: 'test',
+        path: 'test',
+      },
+    };
+
+    const req = mockReq(request);
+    const res = mockRes({
+      render: sinon.spy(),
+    });
+    const next = sinon.stub();
+
+    const filesRoute = filesFactory(gitLoaderStub);
+    filesRoute.hash = () => { 'test'; };
+    filesRoute.back = () => { 'test'; };
+
+    filesRoute(req, res, next);
+
+    setTimeout(() => {
+      expect(res.render).to.be.calledWith('files', {
+        title: 'Просмотр файлов',
+        repo: '//',
+        files: [{
+          type: 'blob',
+          hash: '000',
+          filename: 'some',
+        }],
+        path: 'test',
+        thisIs: 'test',
+        back: '',
+      });
+    }, 0);
+
+  });
+
+  it('роут /files должен вызывать метод next(err) если обращение к git выполнено с ошибкой', () => {
+    const gitLoaderStub = {
+      getFilesTree: () => Promise.reject('err'),
+    };
+
+    const request = {
+      params: {
+        hash: 'test',
+        path: 'test',
+      },
+    };
+
+    const req = mockReq(request);
+    const res = mockRes({
+      render: sinon.stub(),
+    });
+    const next = sinon.spy();
+
+    const filesRoute = filesFactory(gitLoaderStub);
+    filesRoute.hash = () => { 'test'; };
+    filesRoute.back = () => { 'test'; };
+
+    filesRoute(req, res, next);
+
+    setTimeout(() => {
+      expect(next).to.be.calledWith('err');
+    }, 0);
+
+  });
+
+  it('роут /home должен вызывать метод res.redirect()', () => {
+    const gitLoaderStub = {
+      getBranches: () => Promise.resolve([{
+        name: 'master',
+        isDefault: true,
+        link: 'test',
+      }]),
+    };
+
+    const req = mockReq();
+    const res = mockRes({
+      redirect: sinon.spy(),
+    });
+    const next = sinon.stub();
+    const homeRoute = homeFactory(gitLoaderStub);
+
+    homeRoute(req, res, next);
+    setTimeout(() => {
+      expect(res.redirect).to.be.calledWith('/branch/master');
+    }, 0);
+  });
+
+  it('роут /home должен вызывать метод next(err) если промис выполнен с ошибкой', () => {
+    const gitLoaderStub = {
+      getBranches: () => Promise.reject('err'),
+    };
+
+    const req = mockReq();
+    const res = mockRes({
+      redirect: sinon.stub(),
+    });
+    const next = sinon.spy();
+    const homeRoute = homeFactory(gitLoaderStub);
+
+    homeRoute(req, res, next);
+
+    setTimeout(() => {
+      expect(next).to.be.calledWith('err');
+    }, 0);
+  });
+
 });
 

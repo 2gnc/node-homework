@@ -19,6 +19,7 @@ class gitloader {
       getFiles: `git -C ${this.config.path} ls-tree`,
       openFile: `git -C ${this.config.path} cat-file blob`,
     };
+    this.process = require('child_process');
   }
 
   getPath() {
@@ -49,7 +50,7 @@ class gitloader {
 
   getBranches() {
     return new Promise((resolve, reject) => {
-      process.exec(`${this.commands.getBranches}`, (error, stdout, stderr) => {
+      this.process.exec(`${this.commands.getBranches}`, (error, stdout, stderr) => {
         if (stderr) {
           reject(stderr);
         }
